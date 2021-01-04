@@ -8,7 +8,7 @@ It returns a data table containing the point IDs and the values obtained
 for the total length (in km) and the density (in km/km²) among buffers.
 
 ### ExtractingAreaBuffers
-This script extracts the total area and polygone features 
+This script extracts the total area of polygone features 
 (ex : lakes) among buffers around points.
 It returns a data table containing the point IDs and the values obtained
 for the area (in km²) among buffers.
