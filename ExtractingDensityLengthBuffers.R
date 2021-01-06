@@ -29,42 +29,7 @@
 ##############################################################################################################
 
 Calc_linear_density_in_buffers <- function (points_shp_or_path,Col_ID,Vect_bufferSize,lines_shp_or_path){
-  
-  # ##########################
-  # rm(list=ls())
-  # 
-  # #Participations x nights selected
-  # Nights50 <- read.csv2("C:/Users/Lea_Mariton/Documents/These/Article_a_lancer/Vigie_chiro_opening/CSV_First_treatment/Nights50_all_filters.csv")
-  # str(Nights50)
-  # options(digits.secs = 3)
-  # Nights50$Nuit <- parse_date_time(Nights50$Nuit,"%Y-%m-%d", tz="Europe/Paris")
-  # Nights50$sunrise <- parse_date_time(Nights50$sunrise,"%Y-%m-%d %H:%M:%S", tz="Europe/Paris")
-  # Nights50$sunset <- parse_date_time(Nights50$sunset,"%Y-%m-%d %H:%M:%S", tz="Europe/Paris")
-  # Nights50$premier_contact <- parse_date_time(Nights50$premier_contact,"%Y-%m-%d %H:%M:%S", tz="Europe/Paris")
-  # Nights50$dernier_contact <- parse_date_time(Nights50$premier_contact,"%Y-%m-%d %H:%M:%S", tz="Europe/Paris")
-  # Nights50$date_deb_obs <- parse_date_time(Nights50$date_deb_obs,"%Y-%m-%d %H:%M:%S", tz="Europe/Paris")
-  # Nights50$date_fin_obs <- parse_date_time(Nights50$date_fin_obs,"%Y-%m-%d %H:%M:%S", tz="Europe/Paris")
-  # 
-  # #Participation and sites selected
-  # part_select <- read.csv2("C:/Users/Lea_Mariton/Documents/These/Article_a_lancer/Vigie_chiro_opening/CSV_Filtering/Participations_selection.csv")
-  # part_select$site_point <- paste0(part_select$idsite,"_",part_select$point)
-  # part_select <- part_select[which(part_select$participation %in% Nights50$participation),]
-  # 
-  # site_select <- read.csv2("C:/Users/Lea_Mariton/Documents/These/Article_a_lancer/Vigie_chiro_opening/CSV_Filtering/Sites_selection.csv")
-  # site_select$site_point <- paste0(site_select$id_site,"_",site_select$nom)
-  # site_select <- site_select[which(site_select$site_point %in% part_select$site_point),]
-  # 
-  # #SHP Sites
-  # SHP_site_select <- st_as_sf(site_select, coords = c("longitude","latitude"), crs = 4326)
-  # SHP_site_select <- st_transform(SHP_site_select,crs=2154)
-  # points_shp_or_path <- SHP_site_select
-  # 
-  # Col_ID <- "site_point"
-  # Vect_bufferSize <- c(50,500,1000)
-  # lines_shp_or_path <- "C:/Users/Lea_Mariton/Documents/These/Data/Data_SIG/BD_Carthage_2017/BD_Carthage_2017_Fr/CoursEau_FXX.shp"
-
-  ##########################
-  
+    
   #required package
     if (!("sf" %in% installed.packages()[, "Package"])){
     install.packages("sf", dependencies = TRUE)
