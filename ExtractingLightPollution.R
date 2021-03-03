@@ -1,8 +1,8 @@
 ##############################################################################################################
 # This script allows to extract the radiance from the VIIRS data for given sites and the mean radiance in 
 # buffers around sites
-# It returns the table given as an argument with one column for the VIIRS value at the points and as many 
-# columns as the number of buffers given
+# It returns the table given as an argument with one column for the VIIRS value at the points (VIIRS) and as 
+# many columns as the number of buffers given (VIIRS_bufferXXXX with X buffer size in meters)
 ##############################################################################################################
 
 ### Arguments ###
@@ -22,14 +22,14 @@
 
 ##############################################################################################################
 
-extract_VIIRS <- function(tableSites){
+extract_VIIRS <- function(tableSites,vect_buffer_size,path_VIIRS93){
   
-  rm(list=ls())
-  tableSites <- read.csv("C:/Users/Lea_Mariton/Desktop/Tab_Pt_Fixe90.csv")
-  vect_buffer_size <- c(50,100)
-  path_VIIRS <- "C:/Users/Lea_Mariton/Documents/These/Data/Data_SIG/VIIRS/VIIRS_Europe/VIIRS93.tif"
-  
-  
+  # rm(list=ls())
+  # tableSites <- read.csv("C:/Users/Lea_Mariton/Documents/These/Data/Vigie_Chiro/Pour_CK/Tab_Pt_Fixe90.csv")
+  # tableSites <- tableSites[c(1:50),]
+  # vect_buffer_size <- c(50,100)
+  # path_VIIRS <- "D:/Data/Data_SIG/VIIRS/VIIRS_Europe/VIIRS93.tif"
+
   #load packages
   load <- function(pkg){
     new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
@@ -41,27 +41,22 @@ extract_VIIRS <- function(tableSites){
   load(packages)
   
   #raster opening
-  VIIRS_data <- raster(path_VIIRS)
+  VIIRS_data <- raster(path_VIIRS93)
   
   #creation of a site layer
   sites_SHP <- st_as_sf(tableSites, coords = c("Longitude","Latitude"), crs = 4326)
   sites_SHP <- st_transform(sites_SHP,crs=2154)
   
-  #Sunrise and sunset time
-  calc_sunrise_set <- function(x,y,z){
-    tabsun <- sunrise.set(x,y,z,num.days = 2)
-    tabsun[1,1] <- tabsun[2,1]
-    tabsun <- tabsun[-2,]
-    return(as.vector(tabsun))
+  #Radiance at points
+  tableSites$VIIRS <- extract(VIIRS_data,sites_SHP)
+  
+  #Mean radiance in buffers
+  for(buffer_size in vect_buffer_size){
+    tableSites[,dim(tableSites)[2]+1] <- extract(VIIRS_data,sites_SHP,buffer=buffer_size,fun=mean)
+    colnames(tableSites)[dim(tableSites)[2]] <- paste0("VIIRS_buffer",buffer_size)
+    print(buffer_size)
   }
-  
-  tableNightsSites$sunrise <- rep(NA,dim(tableNightsSites)[1])
-  tableNightsSites$sunset <- rep(NA,dim(tableNightsSites)[1])
-  
-  tableNightsSites[,c("sunrise","sunset")] <- as.data.frame(t(mapply(calc_sunrise_set,tableNightsSites$Latitude,tableNightsSites$Longitude,tableNightsSites$Date)))
-  tableNightsSites$sunset <- as_datetime(as.numeric(tableNightsSites$sunset),tz="Europe/Paris")
-  tableNightsSites$sunrise <- as_datetime(as.numeric(tableNightsSites$sunrise),tz="Europe/Paris")
-  
-  return(tableNightsSites)
+
+  return(tableSites)
   
 }
