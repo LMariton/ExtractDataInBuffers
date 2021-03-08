@@ -18,3 +18,9 @@ This script extracts the radiance (nW/cm2/sr) value at given sites and the
 mean radiance value in buffers around these sites.
 It returns the table given as an argument with one new column for the radiance
 value at the sites and as many new columns as the number of buffers given.
+
+### ExtractingShannonIndex
+This script extracts the Shannon index for given sites among different buffer size.
+It returns the table given as an argument with new columns containing Shannon indexes
+for each buffer size given (Shannon_XXX, XXX buffer size).
+
