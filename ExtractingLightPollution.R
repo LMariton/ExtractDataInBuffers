@@ -24,12 +24,6 @@
 
 extract_VIIRS <- function(tableSites,vect_buffer_size,path_VIIRS93){
   
-  # rm(list=ls())
-  # tableSites <- read.csv("C:/Users/Lea_Mariton/Documents/These/Data/Vigie_Chiro/Pour_CK/Tab_Pt_Fixe90.csv")
-  # tableSites <- tableSites[c(1:50),]
-  # vect_buffer_size <- c(50,100)
-  # path_VIIRS <- "D:/Data/Data_SIG/VIIRS/VIIRS_Europe/VIIRS93.tif"
-
   #load packages
   load <- function(pkg){
     new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
