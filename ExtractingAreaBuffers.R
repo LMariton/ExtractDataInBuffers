@@ -7,28 +7,32 @@
 
 ### Arguments ###
 
-# points_shp_or_path : either the path to open the point file (ex : "C:/Users/Prenom Nom/Documents/Points.shp")
-# or the point file already opened in your script
+# tableSites : a table with (minimum):
+# -> a column named "Latitude" with the site latitude in WGS82
+# -> a column named "Longitude" with the site longitude in WGS82
+# -> a column with the sites unique IDs
 
-# Col_ID : column name of the point layer containing the site IDs (ex : "CODE_SITE")
+# Col_ID : column name of the table containing the site IDs (ex : "CODE_SITE")
 
 # Vect_bufferSize : size of the buffers in meters (ex : 50, 500 and 1000m)
 
 # poly_shp_or_path : either the path to open the polygon file (ex : "C:/Users/Prenom Nom/Documents/Poly.shp")
 # or the polygon file already opened in your script
 
-### How to call the function (example): ###
-
-# path_sites <- "C:/Users/Prenom Nom/Documents/Points.shp"
-# sites_ID <- "CODE_SITE"
-# buffers_in_meters <- c(50,500,1000)
-# path_lakes <- "C:/Users/Isabelle Le Viol/Documents/Poly.shp"
-
-# Tab_lakes <- Calc_area_in_buffers (path_sites,sites_ID,buffers_in_meters,path_lakes)
-
 ##############################################################################################################
 
-Calc_area_in_buffers <- function (points_shp_or_path,Col_ID,Vect_bufferSize,poly_shp_or_path){
+Calc_area_in_buffers <- function (tableSites,Col_ID,Vect_bufferSize,poly_shp_or_path){
+  
+  ##################
+  # rm(list=ls())
+  # Nights90 <- read.csv("C:/Users/Lea_Mariton/Documents/These/Data/Vigie_Chiro/Pour_CK/Tab_Pt_Fixe90.csv")
+  # site_Nights90 <- distinct(Nights90[,which(colnames(Nights90) %in% c("site_point","Longitude","Latitude"))])
+  # tableSites <- site_Nights90
+  # Col_ID <- "site_point"
+  # Vect_bufferSize <- c(1000)
+  # poly_shp_or_path <- "D:/Data/Data_SIG/BD_Carthage_2017/BD_Carthage_2017_Fr/PlanEau_FXX.shp/PlanEau_FXX.shp"
+  
+  #################
   
   #required package
   if (!("sf" %in% installed.packages()[, "Package"])){
@@ -36,15 +40,9 @@ Calc_area_in_buffers <- function (points_shp_or_path,Col_ID,Vect_bufferSize,poly
   }
   library(sf)
   
-  #open points data
-  if (all(class(points_shp_or_path)=="character")){
-    shp_points <- st_read(points_shp_or_path)  
-  } else if (all(class(points_shp_or_path)==c("sf","data.frame"))){
-    shp_points <- points_shp_or_path
-  } else {
-    cat("points_shp_or_path has to be either the path to the point file (i.e. a character)\nor a shp file created with the sf package (i.e. an object whose class is c(sf,data.frame)")
-  }
-  shp_points <- st_transform(shp_points,crs=2154) #projection in Lambert 93 if not
+  #creation of a site layer
+  shp_points <- st_as_sf(tableSites, coords = c("Longitude","Latitude"), crs = 4326)
+  shp_points <- st_transform(shp_points,crs=2154)
   
   #open polygons data
   if (all(class(poly_shp_or_path)=="character")){
