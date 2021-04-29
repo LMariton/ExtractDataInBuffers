@@ -1,7 +1,7 @@
 ##############################################################################################################
 # This script allows to extract the Shannon index for given sites among different buffer size
-# It returns the table given as an argument with one column for the VIIRS value at the points (VIIRS) and as 
-# many columns as the number of buffers given (VIIRS_bufferXXXX with X buffer size in meters)
+# It returns the table given as an argument with as many columns as the number of buffers given 
+# (Shannon_bufferXXXX with X buffer size in meters)
 #
 ##############################################################################################################
 #
