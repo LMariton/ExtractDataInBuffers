@@ -8,8 +8,8 @@
 ### Arguments ###
 
 # tableSites : a table with (minimum):
-# -> a column named "Latitude" with the site latitude in WGS82
-# -> a column named "Longitude" with the site longitude in WGS82
+# -> a column named "Latitude" with the site latitude in WGS84
+# -> a column named "Longitude" with the site longitude in WGS84
 # -> a column named "Site_ID" with the sites unique IDs
 #
 # vect_buffer_size : vector with all the buffers sizes (in meters) for which a mean radiance should be 
