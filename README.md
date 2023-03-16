@@ -40,4 +40,4 @@ Here is an example of what your script should look like:
 `pathToLayer <- “C:/Users/Name/Document/waterPolygons.shp”`  
 
 `source("C:/Users/Name/Document/ExtractingAreaBuffers.R")`  
-`areaWaterSites <- Calc_area_in_buffers(sitesSurveyed,”Code_site”,bufferSizes, pathToLayer)`
+`areaWaterSites <- Calc_area_in_buffers(sitesSurveyed,”Code_site”,bufferSizes,pathToLayer)`
