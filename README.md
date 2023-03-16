@@ -35,9 +35,9 @@ Then you can use the function!
 
 Here is an example of what your script should look like: 
 
-`sitesSurveyed <- read.csv(“C:/Users/Name/Document/sitesStudied.csv”)  
-bufferSizes <- c(100,200,500,1000)  
-pathToLayer <- “C:/Users/Name/Document/waterPolygons.shp”  
+`sitesSurveyed <- read.csv(“C:/Users/Name/Document/sitesStudied.csv”)`  
+`bufferSizes <- c(100,200,500,1000)`  
+`pathToLayer <- “C:/Users/Name/Document/waterPolygons.shp”`  
 
-source("C:/Users/Name/Document/ExtractingAreaBuffers.R")  
-areaWaterSites <- Calc_area_in_buffers(sitesSurveyed,”Code_site”,bufferSizes, pathToLayer)`
+`source("C:/Users/Name/Document/ExtractingAreaBuffers.R")`  
+`areaWaterSites <- Calc_area_in_buffers(sitesSurveyed,”Code_site”,bufferSizes, pathToLayer)`
